@@ -41,7 +41,7 @@ export const TaxPlanning = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="salary">Annual Salary (£)</Label>
+              <Label htmlFor="salary">Annual Revenue (£)</Label>
               <Input
                 id="salary"
                 value={salary}
