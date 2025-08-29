@@ -9,7 +9,8 @@ import {
   FileText, 
   MessageSquare, 
   Settings,
-  Building2
+  Building2,
+  PieChart
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -21,6 +22,7 @@ const navItems = [
   { id: 'tax-planning' as TabType, label: 'Tax Planning', icon: Calculator },
   { id: 'cash-flow' as TabType, label: 'Cash Flow Forecast', icon: TrendingUp },
   { id: 'profitability' as TabType, label: 'Profitability Forecast', icon: BarChart3 },
+  { id: 'shareholding' as TabType, label: 'Shareholding & Dilution', icon: PieChart },
   { id: 'news' as TabType, label: 'Industry News', icon: Newspaper },
   { id: 'ai-insights' as TabType, label: 'AI Insights', icon: Brain },
   { id: 'pitch-deck' as TabType, label: 'VC Pitch Deck', icon: FileText },

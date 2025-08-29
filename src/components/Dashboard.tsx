@@ -8,8 +8,9 @@ import { AIInsights } from './AIInsights';
 import { PitchDeckGenerator } from './PitchDeckGenerator';
 import { FounderInput } from './FounderInput';
 import { IntegrationSettings } from './IntegrationSettings';
+import { ShareholdingTracker } from './ShareholdingTracker';
 
-export type TabType = 'tax-planning' | 'cash-flow' | 'profitability' | 'news' | 'ai-insights' | 'pitch-deck' | 'founder-input' | 'integrations';
+export type TabType = 'tax-planning' | 'cash-flow' | 'profitability' | 'news' | 'ai-insights' | 'pitch-deck' | 'founder-input' | 'integrations' | 'shareholding';
 
 export const Dashboard = () => {
   const [activeTab, setActiveTab] = useState<TabType>('tax-planning');
@@ -32,6 +33,8 @@ export const Dashboard = () => {
         return <FounderInput />;
       case 'integrations':
         return <IntegrationSettings />;
+      case 'shareholding':
+        return <ShareholdingTracker />;
       default:
         return <TaxPlanning />;
     }
