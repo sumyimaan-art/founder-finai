@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
 import { TrendingUp, AlertTriangle, DollarSign, Calendar } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export const CashFlowForecast = () => {
   const cashFlowData = {
@@ -14,6 +15,22 @@ export const CashFlowForecast = () => {
     nextFundingTarget: 500000,
     breakEvenMonth: 14
   };
+
+  // Dummy chart data
+  const chartData = [
+    { month: 'Jan', cash: 125000, runway: 125000 },
+    { month: 'Feb', cash: 106500, runway: 106500 },
+    { month: 'Mar', cash: 88000, runway: 88000 },
+    { month: 'Apr', cash: 69500, runway: 69500 },
+    { month: 'May', cash: 51000, runway: 51000 },
+    { month: 'Jun', cash: 32500, runway: 32500 },
+    { month: 'Jul', cash: 14000, runway: 14000 },
+    { month: 'Aug', cash: -4500, runway: 0 },
+    { month: 'Sep', cash: -23000, runway: 0 },
+    { month: 'Oct', cash: -41500, runway: 0 },
+    { month: 'Nov', cash: -60000, runway: 0 },
+    { month: 'Dec', cash: -78500, runway: 0 }
+  ];
 
   return (
     <div className="space-y-6">
@@ -99,12 +116,50 @@ export const CashFlowForecast = () => {
             <CardDescription>Based on current burn rate and market trends</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-64 bg-gradient-card rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-4xl mb-2">📈</div>
-                <div className="text-muted-foreground">Cash flow chart visualization</div>
-                <div className="text-sm text-muted-foreground mt-1">Integration with Bloomberg data</div>
-              </div>
+            <div className="h-64 bg-gradient-card rounded-lg p-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                  <XAxis 
+                    dataKey="month" 
+                    axisLine={false}
+                    tickLine={false}
+                    className="text-xs"
+                  />
+                  <YAxis 
+                    axisLine={false}
+                    tickLine={false}
+                    className="text-xs"
+                    tickFormatter={(value) => `£${(value/1000).toFixed(0)}k`}
+                  />
+                  <Tooltip 
+                    formatter={(value, name) => [`£${value.toLocaleString()}`, name]}
+                    labelStyle={{ color: 'hsl(var(--foreground))' }}
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px'
+                    }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="cash" 
+                    stroke="hsl(var(--primary))" 
+                    strokeWidth={3}
+                    dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
+                    name="Cash Balance"
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="runway" 
+                    stroke="hsl(var(--destructive))" 
+                    strokeWidth={2}
+                    strokeDasharray="5 5"
+                    dot={{ fill: 'hsl(var(--destructive))', strokeWidth: 2, r: 3 }}
+                    name="Runway Projection"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>

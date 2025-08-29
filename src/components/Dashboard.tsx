@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Sidebar } from './Sidebar';
+import { IntegrationStatusWidget } from './IntegrationStatusWidget';
 import { TaxPlanning } from './TaxPlanning';
 import { CashFlowForecast } from './CashFlowForecast';
 import { ProfitabilityForecast } from './ProfitabilityForecast';
@@ -48,6 +49,7 @@ export const Dashboard = () => {
           {renderContent()}
         </div>
       </main>
+      <IntegrationStatusWidget />
     </div>
   );
 };

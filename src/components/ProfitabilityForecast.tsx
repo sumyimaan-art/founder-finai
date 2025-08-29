@@ -4,6 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { BarChart3, Target, Users, Building } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export const ProfitabilityForecast = () => {
   const profitabilityData = {
@@ -19,6 +20,22 @@ export const ProfitabilityForecast = () => {
       other: 3500
     }
   };
+
+  // Dummy chart data
+  const revenueData = [
+    { month: 'Jan', revenue: 45000, projected: 50000 },
+    { month: 'Feb', revenue: 52000, projected: 58000 },
+    { month: 'Mar', revenue: 61000, projected: 67000 },
+    { month: 'Apr', revenue: 68000, projected: 76000 },
+    { month: 'May', revenue: 75000, projected: 85000 },
+    { month: 'Jun', revenue: 85000, projected: 95000 },
+    { month: 'Jul', revenue: 0, projected: 105000 },
+    { month: 'Aug', revenue: 0, projected: 115000 },
+    { month: 'Sep', revenue: 0, projected: 125000 },
+    { month: 'Oct', revenue: 0, projected: 135000 },
+    { month: 'Nov', revenue: 0, projected: 145000 },
+    { month: 'Dec', revenue: 0, projected: 150000 }
+  ];
 
   const totalCosts = Object.values(profitabilityData.costBreakdown).reduce((a, b) => a + b, 0);
 
@@ -78,12 +95,45 @@ export const ProfitabilityForecast = () => {
             <CardDescription>12-month revenue forecast with market insights</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-64 bg-gradient-card rounded-lg flex items-center justify-center mb-4">
-              <div className="text-center">
-                <div className="text-4xl mb-2">📊</div>
-                <div className="text-muted-foreground">Revenue projection chart</div>
-                <div className="text-sm text-muted-foreground mt-1">Enhanced with market data</div>
-              </div>
+            <div className="h-64 bg-gradient-card rounded-lg p-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={revenueData}>
+                  <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                  <XAxis 
+                    dataKey="month" 
+                    axisLine={false}
+                    tickLine={false}
+                    className="text-xs"
+                  />
+                  <YAxis 
+                    axisLine={false}
+                    tickLine={false}
+                    className="text-xs"
+                    tickFormatter={(value) => `£${(value/1000).toFixed(0)}k`}
+                  />
+                  <Tooltip 
+                    formatter={(value, name) => [`£${value.toLocaleString()}`, name]}
+                    labelStyle={{ color: 'hsl(var(--foreground))' }}
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px'
+                    }}
+                  />
+                  <Bar 
+                    dataKey="revenue" 
+                    fill="hsl(var(--primary))"
+                    name="Monthly Revenue"
+                    radius={[4, 4, 0, 0]}
+                  />
+                  <Bar 
+                    dataKey="projected" 
+                    fill="hsl(var(--success))"
+                    name="Projected Revenue"
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
             
             <div className="space-y-3">
